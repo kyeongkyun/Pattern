@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositoryPattern", "Reposi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Unit of Work Pattern", "2. Unit of Work Pattern", "{5AD6E35B-E451-4A8E-8F03-009DDAF47CDB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitOfWork", "UnitOfWork\UnitOfWork.csproj", "{F1EA21AB-4BA6-4838-84F0-E306B89EE57C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitOfWorkPattern", "UnitOfWork\UnitOfWorkPattern.csproj", "{F1EA21AB-4BA6-4838-84F0-E306B89EE57C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
