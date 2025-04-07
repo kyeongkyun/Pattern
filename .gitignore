@@ -9,3 +9,5 @@
 /.vs/PatternNArchi
 /UnitOfWork/bin/Debug/net8.0
 /UnitOfWork/obj
+bin/
+obj/
