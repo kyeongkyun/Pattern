@@ -2,9 +2,9 @@
 ## 개념
 MVVM은 3개의 구성요소로 이루어진 아키텍처
 
-Model: 순수 데이터, 비즈니스 로직 (예: DB 모델, 서비스)
-View:사용자에게 보이는 UI (XAML 화면)
-ViewModel:View와 Model 사이의 다리, 데이터 바인딩 + 커맨드 처리 담당
+- Model: 순수 데이터, 비즈니스 로직 (예: DB 모델, 서비스)
+- View:사용자에게 보이는 UI (XAML 화면)
+- ViewModel:View와 Model 사이의 다리, 데이터 바인딩 + 커맨드 처리 담당
 
 View는 ViewModel을 바인딩만 할 뿐, 직접 참조하지 않음
 
