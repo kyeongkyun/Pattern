@@ -23,6 +23,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5. Observer Pattern", "5. O
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObserverPattern", "ObserverPattern\ObserverPattern.csproj", "{B3BAE7DB-3BB9-4471-B0E5-36DABFA6F70A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6. MVVM Pattern", "6. MVVM Pattern", "{13608FB5-092F-4C4D-BA40-582728FBC9F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVVMPattern", "MVVMPattern\MVVMPattern.csproj", "{8F33113B-C840-49C9-B538-18531AD5C590}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +53,10 @@ Global
 		{B3BAE7DB-3BB9-4471-B0E5-36DABFA6F70A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3BAE7DB-3BB9-4471-B0E5-36DABFA6F70A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3BAE7DB-3BB9-4471-B0E5-36DABFA6F70A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F33113B-C840-49C9-B538-18531AD5C590}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F33113B-C840-49C9-B538-18531AD5C590}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F33113B-C840-49C9-B538-18531AD5C590}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F33113B-C840-49C9-B538-18531AD5C590}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -59,6 +67,7 @@ Global
 		{7B5D14AA-6C2E-41D5-8480-5E6A784FFB3B} = {532715E7-0B71-4792-8342-C5E38EA69DD5}
 		{99B2CC0C-5EAA-416E-B631-3B01D2416635} = {49D36D3B-18D2-4533-BEE6-CEB87EE3B91A}
 		{B3BAE7DB-3BB9-4471-B0E5-36DABFA6F70A} = {33ED9098-0173-4E2F-8E79-1ADE6EFFD64F}
+		{8F33113B-C840-49C9-B538-18531AD5C590} = {13608FB5-092F-4C4D-BA40-582728FBC9F9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {62C98E83-9EF7-4AE7-80CF-C56CE38616C4}
