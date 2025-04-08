@@ -57,7 +57,7 @@ public class MainViewModel : INotifyPropertyChanged
 > RelayCommand는 커맨드를 쉽게 정의해주는 도우미 클래스 (아래 참고)
 
 ### 3. View (MainWindow.xaml)
-```cs
+```xaml
 <Window x:Class="WpfApp.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
