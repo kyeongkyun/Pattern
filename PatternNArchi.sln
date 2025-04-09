@@ -30,9 +30,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "7. Command Pattern", "7. Command Pattern", "{3D600DAB-CCBC-4033-A010-6907F3E5157C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "8. MVP Pattern", "8. MVP Pattern", "{EE7CD321-89AD-4D96-8788-4FD9176715F0}"
-	ProjectSection(SolutionItems) = preProject
-		MVVMPattern\Readme.md = MVVMPattern\Readme.md
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVPPattern", "MVPPattern\MVPPattern.csproj", "{1F093417-7E6B-401E-AF10-44D435CEE953}"
 EndProject
