@@ -1,109 +1,98 @@
-﻿# 6. MVVM Pattern (Model-View-ViewModel)
+﻿# 8. MVP (Model-View-Presenter) 패턴
 ## 개념
-MVVM은 3개의 구성요소로 이루어진 아키텍처
+MVC와 비슷하지만, UI 이벤트를 Presenter가 직접 제어한다는 게 핵심!
 
-Model: 순수 데이터, 비즈니스 로직 (예: DB 모델, 서비스)
-View:사용자에게 보이는 UI (XAML 화면)
-ViewModel:View와 Model 사이의 다리, 데이터 바인딩 + 커맨드 처리 담당
+WinForms처럼 데이터 바인딩이 약한 플랫폼에 적합
 
-View는 ViewModel을 바인딩만 할 뿐, 직접 참조하지 않음
+View는 인터페이스로 추상화되고, 로직은 Presenter에 몰아넣음
 
+## 역할 분담
+구성요소	역할
+Model	비즈니스 로직, 데이터
+View	사용자에게 보여지는 UI (Form, Control)
+Presenter	View와 Model을 연결하고 모든 로직을 처리
 
-## 간단 예제: 이름을 입력하고 버튼 누르면 메시지를 표시하는 앱
+## 예제: 사용자 이름 입력 후 버튼 누르면 환영 메시지 표시
 ### 1. Model
 ```cs
-public class User
+public class UserModel
 {
     public string Name { get; set; }
 }
 ```
-### 2. ViewModel (INotifyPropertyChanged + ICommand)
+### 2. View 인터페이스
 ```cs
-public class MainViewModel : INotifyPropertyChanged
+public interface IUserView
 {
-    public event PropertyChangedEventHandler PropertyChanged;
-
-    private string _userName;
-    public string UserName
+    string UserName { get; }
+    event EventHandler SubmitClicked;
+    void ShowMessage(string message);
+}
+```
+### 3. 실제 View (WinForm)
+```cs
+public partial class MainForm : Form, IUserView
+{
+    public MainForm()
     {
-        get => _userName;
-        set
-        {
-            if (_userName != value)
-            {
-                _userName = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(UserName)));
-                ShowCommand?.RaiseCanExecuteChanged();  // 텍스트 바뀌면 버튼 상태 갱신
-            }
-        }
+        InitializeComponent();
+        btnSubmit.Click += (s, e) => SubmitClicked?.Invoke(this, EventArgs.Empty);
     }
 
-    public RelayCommand ShowCommand { get; }
+    public string UserName => txtName.Text;
 
-    public MainViewModel()
-    {
-        ShowCommand = new RelayCommand(
-            execute: ShowMessage,
-            canExecute: () => !string.IsNullOrWhiteSpace(UserName)
-        );
-    }
+    public event EventHandler SubmitClicked;
 
-    private void ShowMessage()
+    public void ShowMessage(string message)
     {
-        MessageBox.Show($"안녕하세요, {UserName}님!");
+        MessageBox.Show(message);
     }
 }
 ```
-> RelayCommand는 커맨드를 쉽게 정의해주는 도우미 클래스 (아래 참고)
-
-### 3. View (MainWindow.xaml)
+### 4. Presenter
 ```cs
-<Window x:Class="WpfApp.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:local="clr-namespace:WpfApp"
-        Title="MVVM Example" Height="200" Width="300">
-    <Window.DataContext>
-        <local:MainViewModel/>
-    </Window.DataContext>
-
-    <StackPanel Margin="20">
-        <TextBox Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" />
-        <Button Content="인사하기" Command="{Binding ShowCommand}" Margin="0,10,0,0"/>
-    </StackPanel>
-</Window>
-```
-### 4. RelayCommand 도우미
-```cs
-public class RelayCommand : ICommand
+public class UserPresenter
 {
-    private readonly Action _execute;
-    private readonly Func<bool> _canExecute;
+    private readonly IUserView _view;
+    private readonly UserModel _model;
 
-    public event EventHandler CanExecuteChanged;
-
-    public RelayCommand(Action execute, Func<bool> canExecute = null)
+    public UserPresenter(IUserView view)
     {
-        _execute = execute;
-        _canExecute = canExecute;
+        _view = view;
+        _model = new UserModel();
+
+        _view.SubmitClicked += OnSubmitClicked;
     }
 
-    public bool CanExecute(object parameter) => _canExecute == null || _canExecute();
-
-    public void Execute(object parameter) => _execute();
-
-    public void RaiseCanExecuteChanged()
+    private void OnSubmitClicked(object sender, EventArgs e)
     {
-        CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+        _model.Name = _view.UserName;
+        _view.ShowMessage($"안녕하세요, {_model.Name}님!");
     }
 }
 ```
-## MVVM의 장점
-* XAML 바인딩 덕분에 View는 거의 코드 없이 구성 가능
-* UI 로직과 비즈니스 로직이 완전히 분리되어 유지보수 편함
-* 유닛 테스트 용이
+### 5. Program.cs (Presenter 연결)
+```cs
+static class Program
+{
+    [STAThread]
+    static void Main()
+    {
+        Application.EnableVisualStyles();
+        Application.SetCompatibleTextRenderingDefault(false);
 
-## WPF가 버튼을 자동으로 비활성화하는 이유는?
-WPF는 Button이 ICommandSource 인터페이스를 구현하고 있고,
-거기서 Command 바인딩된 객체의 CanExecute()를 호출해서 true/false에 따라 자동으로 활성/비활성 상태를 적용하기 때문.
+        var view = new MainForm();
+        var presenter = new UserPresenter(view);
+
+        Application.Run(view);
+    }
+}
+```
+## 특징 요약
+- 테스트 용이 : View를 인터페이스로 추상화했기 때문에 유닛 테스트 쉬움
+- 관심사 분리 : 로직은 Presenter, UI는 View로 역할 명확
+- WinForms 적합 : MVVM처럼 바인딩 신경 안 써도 됨
+### WinForms에 MVP를 적용하는 경우
+    - 복잡한 UI 입력 검증
+    - 버튼마다 많은 분기 처리
+    - Presenter만 Mock으로 테스트하고 싶을 때
